@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Configuration status="WARN" monitorInterval="30">
+  <Properties>
+    <Property name="LOG_PATTERN">%d{yyyy-MM-dd'T'HH:mm:ss} %p %C{1} - %M %m%n</Property>
+  </Properties>
+  <Appenders>
+    <RollingFile name="rollingLog"
+      fileName="./logs/logger-application.log"
+      filePattern="./logs/$${date:yyyy-MM}/logger-application-%d{-dd-MMMM-yyyy}-%i.log.txt">
+      <PatternLayout pattern="${LOG_PATTERN}"/>
+      <Policies>
+        <SizeBasedTriggeringPolicy size="10 MB"/>
+        <TimeBasedTriggeringPolicy/>
+      </Policies>
+      <DefaultRolloverStrategy max="3"/>
+    </RollingFile>
+    <Console name="consoleLog" target="SYSTEM_OUT">
+      <PatternLayout pattern="%d{HH:mm:ss.SSS} %-5level %C{1} - %msg%n"/>
+    </Console>
+  </Appenders>
+  <Loggers>
+    <Logger name="io.catalyte.training.finalprojectapi" additivity="false">
+      <AppenderRef ref="rollingLog"/>
+      <AppenderRef ref="consoleLog"/>
+    </Logger>
+    <Root level="info">
+      <AppenderRef ref="rollingLog"/>
+      <AppenderRef ref="consoleLog"/>
+    </Root>
+  </Loggers>
+</Configuration>
